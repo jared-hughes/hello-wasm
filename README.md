@@ -8,7 +8,11 @@ This is a "Hello world"-style repository supporting:
 
 Warning: looks like the `wasm-pack` install script is not versioned, so in theory there could be a breaking change to the `wasm-pack` compiler. It points to the 0.12.1 compiler at time of writing.
 
-Note that the deployer (`JamesIves/github-pages-deploy-action`), which copies the public directory to the `gh-pages` branch, ignores everything specified in `.gitignore`. In particular, `.gitignore` must not contain `pkg` (but it should contain `public`).
+Note that the deployer (`JamesIves/github-pages-deploy-action`), which copies the `public-deploy` directory to the `gh-pages` branch, ignores everything specified in `.gitignore`. In particular, `.gitignore` must not contain `pkg` (but it should contain `public-deploy`).
+
+## What the page does
+
+It's a simple web form. Type a name into the input field, then press submit. The JavaScript will handle that form submission event. It reads the name from the input field as a string, then (from a high level perspective) passes that string to Rust. Then, Rust both calls the JS `alert()` function and returns a formatted string. JS finally `alert()`s that last string. If everything works right, there should be two alerts.
 
 ## Building for web
 
@@ -20,10 +24,10 @@ To build, run
 ./build.sh
 ```
 
-This builds a static set of files into the `public/` directory. Then serve the files, e.g.
+This builds a static set of files into the `public-deploy/` directory. Then serve the files, e.g.
 
 ```
-python3 -m http.server -d public
+python3 -m http.server -d public-deploy
 ```
 
 Open `index.html` on the server, and it should alert.
